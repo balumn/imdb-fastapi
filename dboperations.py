@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 import models, schemas
+from database import engine
 
 def createMovie(db: Session, movie: schemas.ImdbBaseCreate):
     data = movie.dict()
@@ -15,3 +16,17 @@ def createMovie(db: Session, movie: schemas.ImdbBaseCreate):
 
 def getMovieDetails(db: Session, movie_name: str):
     return db.query(models.Imdb).filter(models.Imdb.name == movie_name).first()
+
+def bulkCreateMovies(db: Session, data):
+    try:
+        db.bulk_insert_mappings(models.Imdb, data)
+        db.commit()
+        db.refresh(db)
+    except IntegrityError as e:
+        for item in data:
+            db_item = models.Imdb(**item)
+            db.add(db_item)
+            try:
+                db.commit()
+            except:
+                db.rollback()

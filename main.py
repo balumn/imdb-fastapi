@@ -47,12 +47,23 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 async def root():
     return {"message": "Hello World"}
 
-@app.post("/uploadfiles/")
-def create_upload_files(upload_file: UploadFile = File(...),current_user: User = Depends(get_current_active_user)):
+@app.post("/upload/")
+def upload_movies_in_bulk(upload_file: UploadFile = File(...), db: Session = Depends(get_db), current_user: User = Depends(get_current_active_user)):
     
     json_data = json.load(upload_file.file)
-    return json_data
+    data = []
+    for movie in json_data:
+        data.append(
+            dict(
+                name      = movie['name'],
+                imdb_score= movie['imdb_score'],
+                director  = movie['director'],
+                popularity= movie['99popularity'],
+                genre     = (",").join(movie['genre'])
+                )
+            )
+    return dboperations.bulkCreateMovies(db=db,data=data)
 
 @app.post("/movie/")
-def add_movie(movie: schemas.ImdbBaseCreate, db: Session = Depends(get_db),current_user: User = Depends(get_current_active_user)):
+def add_movie(movie: schemas.ImdbBaseCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_active_user)):
     return dboperations.createMovie(db=db, movie=movie)
