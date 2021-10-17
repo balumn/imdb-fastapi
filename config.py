@@ -9,13 +9,4 @@ class AuthSettings(BaseSettings):
 class Settings(BaseSettings):
     admin: str = "my_username"
     password: str = "my_passw0rd"
-
-admin_user = {
-    "my_username": {
-        "username": "my_username",
-        "full_name": "John Doe",
-        "email": "johndoe@example.com",
-        "hashed_password": "$2b$12$E/CM.Mq.Bgs3d1o/K/7Cuexa8Oac8IppWuFb81zSjF2RabXwWfySW",
-        "disabled": False,
-    }
-}
+    SUPER_USER_PASSWORD = "my_passw0rd"
