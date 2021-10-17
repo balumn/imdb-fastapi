@@ -19,10 +19,12 @@ def getMovieDetails(db: Session, movie_name: str):
 
 def bulkCreateMovies(db: Session, data):
     try:
+        # will raise error if any of data already exists in db
         db.bulk_insert_mappings(models.Imdb, data)
         db.commit()
-        db.refresh(db)
     except IntegrityError as e:
+        # will try one by one. takes time but works.
+        # run as a seperate thread if performace is more important
         for item in data:
             db_item = models.Imdb(**item)
             db.add(db_item)
@@ -30,3 +32,4 @@ def bulkCreateMovies(db: Session, data):
                 db.commit()
             except:
                 db.rollback()
+    return {"status": "upload complete"}
