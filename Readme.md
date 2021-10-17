@@ -75,4 +75,5 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
 ### Answer to the Scalability problem in 
-    [scalability.md](https://github.com/balumn/imdb-fastapi/blob/develop/scalablility.md)
+
+[scalability.md](https://github.com/balumn/imdb-fastapi/blob/develop/scalablility.md)
