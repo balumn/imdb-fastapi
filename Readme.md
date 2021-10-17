@@ -18,7 +18,7 @@ OpenAPI is available at
 ### Steps to test
 
 1. Create an Admin user
-    `http://52.91.45.18:8000/docs#/default/create_admin_admin__post`
+    http://52.91.45.18:8000/docs#/default/create_admin_admin__post
 
     SUPERUSER_PASSWORD for `52.91.45.18` is `my_passw0rd`
     (change it in `config.py` if you want to)
@@ -27,13 +27,13 @@ OpenAPI is available at
 
 2. Login as the admin user with the Bearer Token you received
 
-    In `http://52.91.45.18:8000/docs#/` on right-top there is an authorize button. You may use this also for ease.
+    In http://52.91.45.18:8000/docs#/ on right-top there is an Authorize button. You may use this also for ease.
 
-    Alternatively login at `http://52.91.45.18:8000/docs#/default/login_for_access_token_token_post` with username and password.
+    Alternatively login at http://52.91.45.18:8000/docs#/default/login_for_access_token_token_post with username and password.
 
 3. Upload your movies as a json file in
 
-    `http://52.91.45.18:8000/docs#/default/upload_movies_in_bulk_upload__post`
+    http://52.91.45.18:8000/docs#/default/upload_movies_in_bulk_upload__post
     
     Given data already uploaded.
     Only Admins can access this API
@@ -44,12 +44,12 @@ OpenAPI is available at
     Access Limited to Admins only.
 
 5. Users can signup from
-    `http://52.91.45.18:8000/docs#/default/signup_signup__post`
+    http://52.91.45.18:8000/docs#/default/signup_signup__post
 
 6. Search Movies at
-    `http://52.91.45.18:8000/docs#/default/search_movies__get` 
+    http://52.91.45.18:8000/docs#/default/search_movies__get
     
-    (something like `http://52.91.45.18:8000/?search=oz`)
+    (something like http://52.91.45.18:8000/?search=oz)
 
     Using the `search` query_param, we can search for movie name, genre and director name as well.
 
