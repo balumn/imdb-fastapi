@@ -4,7 +4,7 @@
 
 # Architecture
 
-There are 2 Solutions
+2 possible solutions
 
 ### Solution 1
 
