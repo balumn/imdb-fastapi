@@ -44,7 +44,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-@app.get("/")
+@app.get("/ping")
 async def root():
     return {"message": "Hello World"}
 
@@ -101,3 +101,12 @@ def create_admin(user: AdminCreate, db: Session = Depends(get_db)):
     access_token_expires = timedelta(minutes=auth.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
     return {"access_token": access_token, "token_type": "bearer"}
+
+@app.get("/")
+async def search_movies(search: str = "", db: Session = Depends(get_db), current_user: User = Depends(get_current_active_user)):
+    """
+    Search for Movie name, Movie genre and director name
+    only single params is needed for all three fields
+    """
+    print(search)
+    return dboperations.searchMovie(db=db,search=search)

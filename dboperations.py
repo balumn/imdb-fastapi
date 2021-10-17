@@ -1,8 +1,9 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, Query
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 import models, schemas
 from database import engine
 from auth import UserInDB, get_password_hash
+from sqlalchemy.sql import or_
 
 def createMovie(db: Session, movie: schemas.ImdbBaseCreate):
     data = movie.dict()
@@ -68,3 +69,10 @@ def createUser(db: Session, user, user_type=models.UserType.user):
         return {"status": False, "message": "User already exists"}
     db.refresh(db_item)
     return getUserDetails(db, db_item.username)
+
+def searchMovie(db: Session, search: str):
+    fields = [models.Imdb.name, models.Imdb.director, models.Imdb.genre]
+    # fields = ['name', 'director', 'genre']
+    search_args = [col.ilike('%%%s%%' % search) for col in fields]
+    query = Query(models.Imdb).filter(or_(*search_args))
+    return db.execute(query).fetchall()
